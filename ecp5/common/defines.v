@@ -1,0 +1,4 @@
+`define CLK_FREQ 100000000
+`define UART_BAUD 115200
+`define USER_PINS 
+`define USER_CONNECTIVITY
