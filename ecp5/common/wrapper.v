@@ -21,7 +21,7 @@ module top(
     input clock,
     output uart_tx,
     input uart_rx,
-    output [7:0] led,
+    output [7:0] led
 `USER_PINS
 );
     wire sys_reset, dut_reset;
@@ -55,7 +55,7 @@ module top(
         .din(dut_din),
         .dout_ready(dut_dout_ready),
         .dout_valid(dut_dout_valid),
-        .dout(dut_dout),
+        .dout(dut_dout)
         `USER_CONNECTIVITY
     );
 

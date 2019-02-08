@@ -20,8 +20,6 @@
 `ifndef _uart_rx_v_
 `define _uart_rx_v_
 
-`include "uart_baud_tick_gen.v"
-
 module uart_rx(
 	input clk,
 	input rx,

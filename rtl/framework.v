@@ -35,7 +35,7 @@ module hilotof_io (
     input dut_dout_valid
 );
     // Convert uppercase ASCII to hex (returns {valid, hex[3:0]})
-    function [5:0] ascii_to_hex;
+    function [4:0] ascii_to_hex;
         input [7:0] i_ascii;
         case(i_ascii)
             "0": ascii_to_hex = 5'h10;
@@ -111,7 +111,7 @@ module hilotof_io (
     reg [7:0] uart_tx_data;
     wire tx_busy;
     reg tx_in_progress;
-    reg [3:0] tx_count;
+    reg [11:0] tx_count;
     reg [31:0] tx_shiftreg;
 
     always @(posedge clock)
@@ -121,7 +121,8 @@ module hilotof_io (
         if (dut_dout_valid && !tx_in_progress) begin
             tx_shiftreg <= dut_dout;
             tx_count <= 4'b0;
-        end else if (tx_in_progress && !tx_busy) begin
+            tx_in_progress <= 1'b1;
+        end else if (tx_in_progress && !uart_tx_valid && !tx_busy) begin
             if (tx_count < 8) begin
                 uart_tx_valid <= 1'b1;
                 uart_tx_data <= hex_to_ascii(tx_shiftreg[31:28]);
@@ -132,7 +133,7 @@ module hilotof_io (
             end else if (tx_count == 9) begin
                 uart_tx_valid <= 1'b1;
                 uart_tx_data <= "\n";
-            end else begin
+            end else if (&tx_count) begin // Wait a bit to ensure a gap between bytes
                 tx_in_progress <= 1'b0;
             end
             tx_count <= tx_count + 1'b1;
