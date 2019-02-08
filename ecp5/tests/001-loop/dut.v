@@ -7,5 +7,5 @@ module dut(
 	output [31:0] dout
 );
 	assign dout_valid = din_valid;
-	assign dout = din;
+	assign dout = ~din;
 endmodule
