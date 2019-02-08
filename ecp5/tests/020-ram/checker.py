@@ -2,9 +2,11 @@ from interface import DUTInterface
 
 def xorshift32(x):
 	x ^= x << 13
+	x &= 0xFFFFFFFF
 	x ^= x >> 17
+	x &= 0xFFFFFFFF
 	x ^= x << 5
-	return x
+	return x & 0xFFFFFFFF
 
 def main():
 	with DUTInterface() as dut:
