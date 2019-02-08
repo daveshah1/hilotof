@@ -40,3 +40,14 @@ class DUTInterface:
         self.set_din(din)
         self.purge()
         self.check_dout(dout)
+
+    def assert_freq(self, freq, tol=0.001):
+        time.sleep(1)
+        self.purge()
+        self.port.reset_input_buffer()
+        self.port.readline()
+        line = self.port.readline().strip()
+        upper = freq + tol * freq
+        lower = freq - tol * freq
+        actual = 10.0 * int(line, 16)
+        assert (actual >= lower and actual <= upper), ("%f Hz not in [%f, %f]" % (actual, lower, upper))
