@@ -18,7 +18,7 @@ class DUTInterface:
 
     def set_din(self, val):
         # Write value
-        self.port.write(("%8X" % val).encode('utf-8'))
+        self.port.write(("%08X" % val).encode('utf-8'))
         # Write newline to set valid
         self.port.write(b"\n")
         self.port.flush()
@@ -26,7 +26,7 @@ class DUTInterface:
     def purge(self):
         oldto = self.port.timeout
         self.port.timeout = 0.01
-        for i in range(10):
+        for i in range(4):
             data = self.port.read(4096)
         self.port.timeout = oldto
 
