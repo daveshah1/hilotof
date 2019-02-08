@@ -6,6 +6,6 @@ module dut(
 	output dout_valid,
 	output [31:0] dout
 );
-	assign dout_valid = 1'b1;
-	assign dout = 32'hDEADBEEF;
+	assign dout_valid = din_valid;
+	assign dout = din;
 endmodule

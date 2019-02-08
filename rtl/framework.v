@@ -96,7 +96,7 @@ module hilotof_io (
                 dut_din <= {dut_din[27:0], decoded_rx[3:0]};
             else if (uart_rx_data == "R")
                 dut_reset <= 1'b1;
-            else if (uart_rx_data == "\n")
+            else if (uart_rx_data == "\r" || uart_rx_data == "\n")
                 dut_din_valid <= 1'b1;
         end
 
